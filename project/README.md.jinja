@@ -1,26 +1,10 @@
 # {{ project_name }}
 
-[![Tests](https://github.com/{{ repository_namespace }}/{{ repository_name }}/workflows/Tests/badge.svg)](https://github.com/{{ repository_namespace }}/{{ repository_name }}/actions?query=workflow%3Aci)
-[![pypi version](https://img.shields.io/pypi/v/{{ repository_name }}.svg)](https://pypi.org/project/{{ repository_name }}/)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![pdm-managed](https://img.shields.io/badge/pdm-managed-blueviolet)](https://pdm.fming.dev)
-
 {{ project_description }}
 
-## Requirements
+[![PyPI](https://img.shields.io/pypi/v/{{ repository_name }}.svg?label=PyPI&color=blue)](https://pypi.org/project/{{ repository_name }}/)
+[![Python version](https://img.shields.io/pypi/pyversions/{{ repository_name }})](https://pypi.org/project/{{ repository_name }}/)
 
-{{ project_name }} requires Python {{ python_package_requires_python }}
-
-## Installation
-
-It is recommended to install with `pipx`, if `pipx` haven't been installed yet, refer to the [pipx's docs](https://github.com/pipxproject/pipx)
-
-```bash
-$ pipx install {{ python_package_distribution_name }}
-```
-
-Alternatively, install with `pip` to the user site:
-
-```bash
-$ python -m pip install --user {{ python_package_distribution_name }}
-```
+[![Coverage](https://img.shields.io/codecov/c/github/{{ repository_namespace }}/{{ repository_name }}?logo=codecov)](https://app.codecov.io/github/{{ repository_namespace }}/{{ repository_name }})
+[![CI/CD](https://img.shields.io/github/actions/workflow/status/{{ repository_namespace }}/{{ repository_name }}/publish.yml?label=CI/CD&logo=github)](https://github.com/{{ repository_namespace }}/{{ repository_name }}/actions/workflows/publish.yml)
+[![GitHub issues](https://img.shields.io/github/issues/{{ repository_namespace }}/{{ repository_name }}?logo=github)](https://github.com/{{ repository_namespace }}/{{ repository_name }}/issues)
