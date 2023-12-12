@@ -110,7 +110,7 @@ where = [
 ]
 
 [tool.setuptools.package-data]
-{{ python_package_distribution_name }} = [
+{{ python_package_import_name }} = [
     "py.typed",
 ]
 
@@ -212,14 +212,6 @@ exclude = [
     "src/npc_sessions/plots",
     "src/npc_sessions/scripts",
 ]
-
-[build-system]
-requires = [
-    "setuptools>=61",
-    "wheel",
-]
-build-backend = "setuptools.build_meta"
-
 
 [tool.towncrier]
 package = "{{python_package_import_name}}"

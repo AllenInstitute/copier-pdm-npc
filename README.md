@@ -6,6 +6,21 @@ This copier template is mainly for my own usage, but feel free to try it out, or
 
 You need to install [Copier](https://copier.readthedocs.io/en/stable/) first.
 
+## Quick Start
+
+With PDM:
+```bash
+pdm init --copier gh:bjhardcastle/copier-pdm-npc --UNSAFE
+```
+
+With copier:
+
+```bash
+copier "gh:bjhardcastle/copier-pdm-npc" <project_name>
+```
+
+See the [documentation](https://copier-pdm.fming.dev) for more details.
+
 ## Features
 
 ### Package manager
@@ -41,16 +56,3 @@ Make below requirements are met to use the copier template:
 - Git
 - [Copier](https://copier.readthedocs.io/en/stable/)
 
-## Quick Start
-
-```bash
-copier "https://github.com/pdm-project/copier-pdm.git" <project_name>
-```
-
-Or even shorter:
-
-```bash
-copier "gh:pdm-project/copier-pdm" <project_name>
-```
-
-See the [documentation](https://copier-pdm.fming.dev) for more details.
