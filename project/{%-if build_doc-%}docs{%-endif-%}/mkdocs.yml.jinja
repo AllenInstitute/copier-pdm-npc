@@ -4,7 +4,7 @@ site_url: "https://{{ repository_namespace }}.github.io/{{ repository_name }}"
 repo_url: "https://github.com/{{ repository_namespace }}/{{ repository_name }}"
 repo_name: "{{ repository_namespace }}/{{ repository_name }}"
 site_dir: "site"
-watch: [mkdocs.yml, README.md, CHANGELOG.md, src/{{ python_package_import_name }}]
+watch: [mkdocs.yml, ../src/{{ python_package_import_name }}]
 copyright: Copyright &copy; {{ copyright_date }} {{ copyright_holder }}
 edit_uri: edit/main/docs/
 
@@ -24,21 +24,21 @@ theme:
       name: Switch to light mode
   - media: "(prefers-color-scheme: light)"
     scheme: default
-    primary: teal
-    accent: purple
+    primary: purple
+    accent: teal
     toggle:
       icon: material/weather-sunny
       name: Switch to dark mode
   - media: "(prefers-color-scheme: dark)"
     scheme: slate
-    primary: black
-    accent: purple
+    primary: purple
+    accent: teal
     toggle:
       icon: material/weather-night
       name: Switch to system preference
-  font:
-    text: Open Sans
-    code: Fira Code
+  # font:
+  #   text: Open Sans
+  #   code: Fira Code
   features:
   - announce.dismiss
   - content.action.edit
@@ -112,9 +112,12 @@ plugins:
         - https://docs.python.org/3/objects.inv
         paths: [src]
         options:
+          docstring_style: null
+          show_docstring_examples: false
           docstring_options:
-            ignore_init_summary: true
+            ignore_init_summary: false
           docstring_section_style: list
+          trim_doctest_flags: true
           filters: ["!^_"]
           heading_level: 1
           inherited_members: true
@@ -127,6 +130,7 @@ plugins:
           show_symbol_type_toc: true
           signature_crossrefs: true
           summary: true
+
 - git-committers:
     enabled: true
     repository: {{ repository_namespace }}/{{ repository_name }}
