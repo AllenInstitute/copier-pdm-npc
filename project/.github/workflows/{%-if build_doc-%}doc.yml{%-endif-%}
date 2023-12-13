@@ -6,7 +6,7 @@ on:
       - master
       - main
     paths:
-      - "*.md"
+      - "**.md"
       - docs/**
   release:
     types: [published]
