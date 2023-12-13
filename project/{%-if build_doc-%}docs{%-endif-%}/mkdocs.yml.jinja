@@ -13,8 +13,7 @@ nav:
     - Overview: index.md
     - Changelog: changelog.md
     - Contributing: contributing.md
-  - API reference:
-    - {{ project_name }}: reference/
+    - API reference: reference/
 
 theme:
   name: material
@@ -132,12 +131,12 @@ plugins:
           signature_crossrefs: true
           summary: true
 
-- git-committers:
-    enabled: true
-    repository: {{ repository_namespace }}/{{ repository_name }}
-- git-revision-date-localized:
-    enable_creation_date: true
-    type: timeago
+# - git-committers:
+#     enabled: true
+#     repository: {{ repository_namespace }}/{{ repository_name }}
+# - git-revision-date-localized:
+#     enable_creation_date: true
+#     type: timeago
 - minify:
     minify_html: true
 - group:
