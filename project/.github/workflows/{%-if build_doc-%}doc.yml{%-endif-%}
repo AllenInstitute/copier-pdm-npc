@@ -6,12 +6,16 @@ on:
       - master
       - main
     paths:
-      - "CHANGELOG.md"
+      - "*.md"
       - docs/**
   release:
     types: [published]
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
+      
 jobs:
   build-doc:
     runs-on: ubuntu-latest
@@ -25,7 +29,7 @@ jobs:
       - name: Build pages
         run: |
           pdm install -G docs
-          pdm run docs
+          cd docs && pdm run mkdocs build
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
