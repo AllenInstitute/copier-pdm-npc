@@ -50,7 +50,8 @@ dev = [
     ##
     "git-changelog>=2.3",
     "parver>=0.3",
-    {% if build_doc %}
+]
+docs = [
     "markdown-callouts>=0.3",
     "markdown-exec>=1.7",
     "mkdocs>=1.5",
@@ -63,7 +64,6 @@ dev = [
     "mkdocs-minify-plugin>=0.7",
     "mkdocstrings[python]>=0.23",
     "tomli>=2.0; python_version < '3.11'",
-    {% endif %}
 ]
 
 
@@ -190,7 +190,7 @@ exclude_also = [
 addopts = [
     "--import-mode=importlib",
     "--doctest-modules",
-    "--ignore-glob=*scripts*,*examples*",
+    "--ignore-glob=*scripts*,*examples*,*docs*",
     "--cov",
     "--cov-report=xml",
     "--cov-config=pyproject.toml",
