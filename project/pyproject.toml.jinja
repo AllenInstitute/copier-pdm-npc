@@ -50,12 +50,6 @@ dev = [
     ##
     "towncrier>=19.2",
     "parver>=0.3",
-]
-{% if build_doc %}
-doc = [
-    "mkdocs>=1.1",
-    "mkdocs-material>=6.2",
-    "black>=23.9",
     "markdown-callouts>=0.3",
     "markdown-exec>=1.7",
     "mkdocs>=1.5",
@@ -69,8 +63,7 @@ doc = [
     "mkdocstrings[python]>=0.23",
     "tomli>=2.0; python_version < '3.11'",
 ]
-]
-{% endif %}
+
 
 
 [tool.pdm]
