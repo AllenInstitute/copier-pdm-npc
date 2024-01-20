@@ -1,10 +1,8 @@
-# Copier PDM
+# Copier PDM + MindScope NP
 
-Copier template for PDM projects.
+Copier template for MindScope Neuropixels projects to get up and running quickly with automated formatting, testing, publishing and docs.
 
-This copier template is mainly for my own usage, but feel free to try it out, or fork it!
-
-You need to install [Copier](https://copier.readthedocs.io/en/stable/) first.
+You need to install [Copier](https://copier.readthedocs.io/en/stable/) and PDM first.
 
 ## Quick Start
 
@@ -19,40 +17,42 @@ With copier:
 copier "gh:bjhardcastle/copier-pdm-npc" <project_name>
 ```
 
-See the [documentation](https://copier-pdm.fming.dev) for more details.
+See this [documentation](https://copier-pdm.fming.dev) for more details.
 
 ## Features
 
 ### Package manager
 
-The template project uses [PDM](https://pdm.fming.dev) setup, with pre-defined `pyproject.toml`
+The template project uses [PDM](https://pdm.fming.dev) setup, with pre-defined `pyproject.toml` configuration for tools
+- add dependencies: `pdm add numpy`
+  - add dev dependencies: `pdm add -G dev numpy`
+- remove dependencies correctly: `pdm remove numpy`
+- always commit `pdm.lock` for a reproducible dev environment
 
-### Documentation and changelog
+### VSCode config
+
+- `.vscode/settings.json` will be generated with the project, to enable mypy static analysis (instead of Pylance).
+- `.vscode/extensions.json` will make suggestions for extenstions that aren't already instealled
+
+### Github actions
+
+Triggered on pushes to the main branch:
+
+#### Documentation and changelog
 
 - Documentation is built with [MkDocs](https://github.com/mkdocs/mkdocs)
-  ([Material theme](https://github.com/squidfunk/mkdocs-material)
-- Changelog is auto-generated from the fragments under `news` directory, with the power of [towncrier](https://pypi.org/project/towncrier/)
+  ([Material theme](https://github.com/squidfunk/mkdocs-material))
+- A basic changelog is auto-generated from commit messages
 
-### Pre-commit and linter
+#### Formatting and linting
 
-[pre-commit](https://pre-commit.com/) is used for both commit hook and linting, including the following hooks:
-
+- black
 - [ruff](https://github.com/charliermarsh/ruff)
 
-### VSCode default settings
-
-The `.vscode/settings.json` will also be generated with the project, to enable Pylance auto-completions and test discovery in VSCode.
-
-### Tests
+#### Tests
 
 - Tests run with [pytest](https://pytest.org/)
-- Multi-environment testing powered by [nox](https://nox.thea.codes/)
+- mypy is run (without strict mode, so untyped functions will not be analyzed)
 
-## Requirements
-
-Make below requirements are met to use the copier template:
-
-- Python 3
-- Git
-- [Copier](https://copier.readthedocs.io/en/stable/)
-
+#### Publishing
+Provided all tests pass, the package is published to [pypi](https://pypi.org)
