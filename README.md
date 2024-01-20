@@ -19,6 +19,8 @@ copier "gh:bjhardcastle/copier-pdm-npc" <project_name>
 
 See this [documentation](https://copier-pdm.fming.dev) for more details.
 
+After connecting to a github repo, create the secrets used in `publish.yml` in `Actions`
+
 ## Features
 
 ### Package manager
