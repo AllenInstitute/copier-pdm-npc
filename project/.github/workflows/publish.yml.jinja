@@ -18,8 +18,8 @@ on:
   workflow_dispatch:  # adds a 'Run Workflow' button for manual launching
 
 concurrency: # jobs currently running will be cancelled when this workflow starts
-  group: ${{ github.ref }}
-  cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
+  group: {% raw %}${{ github.ref }}{% endraw %}
+  cancel-in-progress: {% raw %}${{ github.ref != 'refs/heads/master' }}{% endraw %}
       
 jobs:
   package:
@@ -38,7 +38,7 @@ jobs:
     
     - uses: pdm-project/setup-pdm@v3
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: {% raw %}${{ matrix.python-version }}{% endraw %}
         update-python: true
         cache: true # speeds-up setup by caching downloaded packages 
         
@@ -48,12 +48,12 @@ jobs:
         
     - name: Test, format, lint
       env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        DBHUB_API_KEY: ${{ secrets.DBHUB_API_KEY }}
-        CODE_OCEAN_API_TOKEN: ${{ secrets.CODE_OCEAN_API_TOKEN }}
-        CODE_OCEAN_DOMAIN: ${{ secrets.CODE_OCEAN_DOMAIN }}
+        AWS_ACCESS_KEY_ID: {% raw %}${{ secrets.AWS_ACCESS_KEY_ID }}{% endraw %}
+        AWS_DEFAULT_REGION: {% raw %}${{ secrets.AWS_DEFAULT_REGION }}{% endraw %}
+        AWS_SECRET_ACCESS_KEY: {% raw %}${{ secrets.AWS_SECRET_ACCESS_KEY }}{% endraw %}
+        DBHUB_API_KEY: {% raw %}${{ secrets.DBHUB_API_KEY }}{% endraw %}
+        CODE_OCEAN_API_TOKEN: {% raw %}${{ secrets.CODE_OCEAN_API_TOKEN }}{% endraw %}
+        CODE_OCEAN_DOMAIN: {% raw %}${{ secrets.CODE_OCEAN_DOMAIN }}{% endraw %}
       run: |
         mkdir .mypy_cache   
         pdm run prebuild
@@ -86,7 +86,7 @@ jobs:
         pdm run tag
         git push --tags
       env:
-          GITHUB_TOKEN: ${{ secrets.PAT }} 
+          GITHUB_TOKEN: {% raw %}${{ secrets.PAT }}{% endraw %}
           # use PAT, or push comes from `github-actions` bot, which can't trigger
           # other workflows   
 
@@ -97,4 +97,4 @@ jobs:
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
       env:
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        CODECOV_TOKEN: {% raw %}${{ secrets.CODECOV_TOKEN }}{% endraw %}

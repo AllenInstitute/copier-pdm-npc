@@ -5,3 +5,6 @@
     :author: {{ author_fullname }} <{{ author_email }}>
     :license: {{ copyright_license }}
 """
+import importlib.metadata
+
+__version__ = importlib.metadata.version("{{ python_package_import_name }}")
