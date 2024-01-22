@@ -2,19 +2,18 @@
 
 Copier template for MindScope Neuropixels projects to get up and running quickly with automated formatting, testing, publishing and docs.
 
-You need to install [Copier](https://copier.readthedocs.io/en/stable/) and PDM first.
-
 ## Quick Start
+
+First install [Copier](https://copier.readthedocs.io/en/stable/) and [PDM](https://copier-pdm.fming.dev/) via [pipx](https://github.com/pypa/pipx) (for isolated CLI tools).
+```bash
+python3 -m pip install --user pipx
+
+pipx install copier pdm
+```
 
 With PDM:
 ```bash
 pdm init --copier gh:bjhardcastle/copier-pdm-npc --UNSAFE
-```
-
-With copier:
-
-```bash
-copier "gh:bjhardcastle/copier-pdm-npc" <project_name>
 ```
 
 See this [documentation](https://copier-pdm.fming.dev) for more details.
