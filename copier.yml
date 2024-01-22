@@ -108,3 +108,8 @@ build_doc:
   type: bool
   help: Do you want to include a doc site?
   default: yes
+
+add_requirements_txt:
+  type: bool
+  help: Do you want to have a requirements.txt file auto-generated for each version?
+  default: no

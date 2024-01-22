@@ -5,8 +5,8 @@ name: Publish Python package
 
 on:
   push:
-    branches: [ "main" ]
-    paths-ignore:
+    branches: [ "main" ] 
+    paths-ignore: # pushing any of these files/folders alone will not trigger the workflow
       - '**.ipynb'
       - '**.json'
       - '.vscode'
@@ -15,9 +15,9 @@ on:
       - 'notebooks'
       - '**.md'
       - '**.yml'
-  workflow_dispatch:
+  workflow_dispatch:  # adds a 'Run Workflow' button for manual launching
 
-concurrency:
+concurrency: # jobs currently running will be cancelled when this workflow starts
   group: ${{ github.ref }}
   cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
       
@@ -28,17 +28,19 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        python-version: ["3.9"]
+        python-version: ["{{ python_package_requires_python }}"]
     permissions: write-all
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
+      fetch-depth: 0    # get all commits (on default branch)
+      fetch-tags: true  
     
     - uses: pdm-project/setup-pdm@v3
       with:
         python-version: ${{ matrix.python-version }}
         update-python: true
-        cache: true
+        cache: true # speeds-up setup by caching downloaded packages 
         
     - name: Install dependencies
       run: |
@@ -53,7 +55,7 @@ jobs:
         CODE_OCEAN_API_TOKEN: ${{ secrets.CODE_OCEAN_API_TOKEN }}
         CODE_OCEAN_DOMAIN: ${{ secrets.CODE_OCEAN_DOMAIN }}
       run: |
-        mkdir .mypy_cache
+        mkdir .mypy_cache   
         pdm run prebuild
         
     - name: Bump project version
@@ -63,21 +65,34 @@ jobs:
     - name: Publish
       run: |
         pdm publish
-      
+    
+    {% if add_requirements_txt %}
     - name: Add requirements.txt
       run: |
         pdm export --without-hashes --prod -o requirements.txt
+    {% endif %}
 
-    - name: Commit changes
-      uses: EndBug/add-and-commit@v9
-      with:
-        default_author: github_actions
-        message: "Bump [skip actions]"
-        
-    - name: Tag commit
+    - name: Bump, pull, tag commit
+      # pull in case non-packaged files were changed since job started (packaged
+      # files would trigger a new job and cancel this one)
       run: |
+        git config --global user.email "{{ author_email }}"
+        git config --global user.name "{{ author_fullname }}"
+        git stash
+        git pull --rebase 
+        git stash pop
+        pdm run bumpver
+        git commit -am "Bump [skip actions]"
         pdm run tag
         git push --tags
+      env:
+          GITHUB_TOKEN: ${{ secrets.PAT }} 
+          # use PAT, or push comes from `github-actions` bot, which can't trigger
+          # other workflows   
+
+    - name: Publish
+      run: |
+        pdm publish
 
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
