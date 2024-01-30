@@ -20,10 +20,24 @@ pipx run pdm init --copier gh:alleninstitute/copier-pdm-npc --UNSAFE
 ```
 - see this [documentation](https://copier-pdm.fming.dev) for more details.
 
-4. Add a remote on Github
+4. Add git and remote:
+```bash
+git init && git remote set-url origin https://<personal_access_token>@github.com/<repository_namespace>/{repository_name}
+```
 5. Go to the `Actions` menu in Github and create the secrets used in `publish.yml`
 6. To simplify publishing to PyPI, set up OIDC [here](https://pypi.org/manage/account/publishing/), using the `publish.yml` workflow:
-   > OpenID Connect (OIDC) provides a flexible, credential-free mechanism for delegating publishing authority for a PyPI package to a trusted third party service, like GitHub Actions
+   > OpenID Connect (OIDC) provides a flexible, credential-free mechanism for
+   > delegating publishing authority for a PyPI package to a trusted third party
+   > service, like GitHub Actions
+   
+## Update from original template
+As the template develops, you might want to pull changes to update the
+project accordingly. 
+
+ -commit all changes first, then run `copier update`
+
+See (here)[https://copier.readthedocs.io/en/stable/updating/] for more details.
+
 ## Features
 
 ### Package manager
