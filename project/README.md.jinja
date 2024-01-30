@@ -11,11 +11,11 @@
 
 # Quickstart
 ```bash
-conda create -n "{{ python_package_import_name }}" "python{{ python_package_requires_python }}"
-conda activate "{{ python_package_import_name }}"
-pip install "{{ python_package_import_name }}"
+conda create -n {{ python_package_import_name }} python{{ python_package_requires_python }}
+conda activate {{ python_package_import_name }}
+pip install {{ python_package_import_name }}
 ```
 
 ```python
-import "{{ python_package_import_name }}"
+import {{ python_package_import_name }}
 ```
