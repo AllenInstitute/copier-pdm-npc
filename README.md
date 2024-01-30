@@ -16,7 +16,7 @@ pipx run pdm self add copier
 
 3. Initialize the project folder and answer the questions that appear:
 ```bash
-pipx run pdm init --copier gh:bjhardcastle/copier-pdm-npc --UNSAFE
+pipx run pdm init --copier gh:alleninstitute/copier-pdm-npc --UNSAFE
 ```
 - see this [documentation](https://copier-pdm.fming.dev) for more details.
 
