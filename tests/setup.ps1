@@ -28,7 +28,7 @@ Write-Output "             GENERATING PROJECT"
 Write-Output "///////////////////////////////////////////"
 Write-Output ""
 
-copier -f $Template $Dest `
+copier copy --trust $Template $Dest `
 	-d project_name="copier-pdm-testing" `
 	-d project_description='Testing this great template' `
 	-d author_fullname="Tester" `
