@@ -4,17 +4,17 @@ Copier template for MindScope Neuropixels projects to get up and running quickly
 
 ## Quick Start
 
-1. install [PDM](https://copier-pdm.fming.dev/) via [pipx](https://github.com/pypa/pipx) (for isolated CLI tools):
+1. Install [PDM](https://copier-pdm.fming.dev/) via [pipx](https://github.com/pypa/pipx) (for isolated CLI tools):
 ```bash
 python3 -m pip install --user pipx
 ```
 
-2. add [Copier](https://copier.readthedocs.io/en/stable/) to PDM:
+2. Add [Copier](https://copier.readthedocs.io/en/stable/) to PDM:
 ```bash
 pipx run pdm self add copier
 ```
 
-3. initialize project and answer the questions that appear:
+3. Initialize the project folder and answer the questions that appear:
 ```bash
 pipx run pdm init --copier gh:bjhardcastle/copier-pdm-npc --UNSAFE
 ```
