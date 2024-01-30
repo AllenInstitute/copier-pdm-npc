@@ -8,10 +8,10 @@ license = {text = "{{ copyright_license }}"}
 readme = "README.md"
 requires-python = "{{ python_package_requires_python }}"
 dependencies = []
-version = "{{ package_version }}"
+version = 
 
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 3 - Alpha", # https://pypi.org/classifiers/
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
@@ -26,7 +26,9 @@ Repository = "https://github.com/{{ repository_namespace }}/{{ repository_name }
 Issues = "https://github.com/{{ repository_namespace }}/{{ repository_name }}/issues"
 
 [project.scripts]
-# write_dataframes = "npc_sessions.scripts.write_dataframes:main"
+# create executables pointing to specific functions, e.g. for CLI tools
+# see src/scripts/README.md
+# executable_name = "{{ python_package_import_name }}.scripts.module_name:main"
 
 
 [tool.pdm.build]
@@ -65,8 +67,6 @@ docs = [
     "mkdocstrings[python]>=0.23",
     "tomli>=2.0; python_version < '3.11'",
 ]
-
-
 
 [tool.pdm]
 plugins = [
