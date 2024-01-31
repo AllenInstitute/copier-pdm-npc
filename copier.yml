@@ -102,7 +102,7 @@ python_package_import_name:
 python_package_requires_python:
   type: str
   help: The python version range your project supports
-  default: ">=3.9, <3.12" # many projects not compatible with 3.12 as of Jan 2024
+  default: ">=3.9,<3.12" # many projects not compatible with 3.12 as of Jan 2024
 
 build_doc:
   type: bool
