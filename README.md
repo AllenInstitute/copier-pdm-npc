@@ -22,9 +22,9 @@ pipx run pdm init --copier gh:alleninstitute/copier-pdm-npc --UNSAFE
 
 4. Add git and remote:
 ```bash
-git init && git remote set-url origin https://<personal_access_token>@github.com/<repository_namespace>/{repository_name}
+git init && git remote add origin https://<personal_access_token>@github.com/<repository_namespace>/{repository_name}
 ```
-5. Go to the `Actions` menu in Github and create the secrets used in `publish.yml`
+5. On the repo's Github page, go to `Settings > Secrets > Actions` and create the secrets used in `publish.yml`
 6. To simplify publishing to PyPI, set up OIDC [here](https://pypi.org/manage/account/publishing/), using the `publish.yml` workflow:
    > OpenID Connect (OIDC) provides a flexible, credential-free mechanism for
    > delegating publishing authority for a PyPI package to a trusted third party
