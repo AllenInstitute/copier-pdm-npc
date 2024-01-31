@@ -12,10 +12,12 @@ on:
     types: [published]
   workflow_dispatch:
 
+{% raw %}
 concurrency:
-  group: {% raw %}${{ github.ref }}{% endraw %}
+  group: ${{ github.ref }}
   cancel-in-progress: false
-      
+{% endraw %}
+
 jobs:
   build-doc:
     runs-on: ubuntu-latest
@@ -33,5 +35,5 @@ jobs:
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: {% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw %}
+          github_token: ${{ '{{' }} secrets.GITHUB_TOKEN {{ '}}' }}
           publish_dir: ./docs/site
