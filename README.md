@@ -24,12 +24,27 @@ pipx run pdm init --copier gh:alleninstitute/copier-pdm-npc --UNSAFE
 ```bash
 git init && git remote add origin https://<personal_access_token>@github.com/<repository_namespace>/{repository_name}
 ```
-5. On the repo's Github page, go to `Settings > Secrets > Actions` and create the secrets used in `publish.yml`
+5. On the repo's Github page, go to `Settings > Secrets > Actions` and create the
+   secrets used in `publish.yml` (at the very least, this will include AWS
+   credentials if cloud data is accessed for testing)
 6. To simplify publishing to PyPI, set up OIDC [here](https://pypi.org/manage/account/publishing/), using the `publish.yml` workflow:
    > OpenID Connect (OIDC) provides a flexible, credential-free mechanism for
    > delegating publishing authority for a PyPI package to a trusted third party
    > service, like GitHub Actions
-   
+
+## Creating documentation page
+If you enabled documentation in the initial questionnaire, a `gh-pages` branch
+will be created after the first successful run of `publish.yml` in Github Actions.
+
+To display the docs:
+- on the repo's Github page, go to `Settings > Pages`
+- choose `Source: Deploy from branch`
+- choose the `gh-pages` branch, then save
+- after a few seconds, a link to the documentation site should be available at the
+  top of the page
+- enable a link on the repository homepage by going editing the `About` settings
+  (right hand side) and toggling `Use your GitHub Pages website` as the repo's webpage
+
 ## Update from original template
 As the template develops, you might want to pull changes to update the
 project accordingly. 
