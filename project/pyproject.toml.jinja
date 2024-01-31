@@ -48,7 +48,6 @@ dev = [
     "mypy>=1.4.1",
     "pytest-cov>=4.1.0",
     "black>=23.7.0",
-    "pytest-xdist>=3.3.1",
     ##
     "git-changelog>=2.3",
     "parver>=0.3",
@@ -196,7 +195,7 @@ addopts = [
     "--cov-config=pyproject.toml",
     "--doctest-glob=*README.md",
     "-x",
-    "-n=auto",
+    # "-n=auto", for use with pytest-xdist
 ]
 doctest_optionflags = [
     "NORMALIZE_WHITESPACE",
