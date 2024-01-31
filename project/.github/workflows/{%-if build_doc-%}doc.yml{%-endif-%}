@@ -1,14 +1,13 @@
-
 name: Build docs
 
 on:
   push:
-    branches:
-      - master
-      - main
     paths:
       - "**.md"
       - docs/**
+      - .github/workflows/docs.yml
+    tags:        
+      - '**'        
   release:
     types: [published]
   workflow_dispatch:
@@ -16,7 +15,6 @@ on:
 {% raw %}
 concurrency:
   group: ${{ github.ref }}
-  cancel-in-progress: false
 {% endraw %}
 
 jobs:
