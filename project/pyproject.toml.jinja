@@ -2,15 +2,13 @@
 name = "{{ python_package_distribution_name }}"
 description = "{{ project_description }}"
 authors = [
-    { name = "{{ author_fullname }}", email = "{{ author_email }}" }
+    { name = "{{ author_fullname }}", email = "{{ author_email }}" },
 ]
-license = {text = "{{ copyright_license }}"}
 readme = "README.md"
 requires-python = "{{ python_package_requires_python }}"
 dependencies = [
 ]
 version = "{{ package_version }}"
-
 classifiers = [
     "Development Status :: 3 - Alpha", # https://pypi.org/classifiers/
     "Programming Language :: Python :: 3",
@@ -22,6 +20,9 @@ classifiers = [
     "Operating System :: POSIX :: Linux",
 ]
 
+[project.license]
+text = "{{ copyright_license }}"
+
 [project.urls]
 Repository = "https://github.com/{{ repository_namespace }}/{{ repository_name }}"
 Issues = "https://github.com/{{ repository_namespace }}/{{ repository_name }}/issues"
@@ -31,46 +32,12 @@ Issues = "https://github.com/{{ repository_namespace }}/{{ repository_name }}/is
 # see src/scripts/README.md
 # executable_name = "{{ python_package_import_name }}.scripts.module_name:main"
 
-[tool.pdm.build]
-package-dir = "src"
-
 [build-system]
 requires = [
     "setuptools>=61",
     "wheel",
 ]
 build-backend = "setuptools.build_meta"
-
-[tool.pdm.dev-dependencies]
-dev = [
-    "pytest>=7.4.0",
-    "ruff>=0.0.282",
-    "mypy>=1.4.1",
-    "pytest-cov>=4.1.0",
-    "black>=23.7.0",
-    "git-changelog>=2.3",
-    "parver>=0.3",
-]
-docs = [
-    "markdown-callouts>=0.3",
-    "markdown-exec>=1.7",
-    "mkdocs>=1.5",
-    "mkdocs-coverage>=1.0",
-    "mkdocs-gen-files>=0.5",
-    "mkdocs-git-committers-plugin-2>=1.2",
-    "mkdocs-git-revision-date-localized-plugin>=1.2",
-    "mkdocs-literate-nav>=0.6",
-    "mkdocs-material>=9.4",
-    "mkdocs-minify-plugin>=0.7",
-    "mkdocstrings[python]>=0.23",
-    "tomli>=2.0; python_version < '3.11'",
-]
-
-[tool.pdm]
-plugins = [
-    "pdm-bump",
-    "copier",
-]
 
 [tool.setuptools.packages.find]
 where = [
@@ -84,7 +51,11 @@ where = [
 
 [tool.black]
 # line-length = 100
-target-version = ["py39", "py310", "py311"]
+target-version = [
+    "py39", 
+    "py310", 
+    "py311",
+]
 
 [tool.ruff]
 line-length = 100
@@ -105,8 +76,12 @@ select = [
     "UP",
 ]
 # extend-ignore = ["B018", "B019"]
-src = ["src"]
-extend-exclude = ["tests/fixtures"]
+src = [
+    "src",
+]
+extend-exclude = [
+    "tests/fixtures",
+]
 target-version = "py39"
 
 [tool.ruff.flake8-tidy-imports]
@@ -183,10 +158,47 @@ exclude = [
 [tool.isort]
 profile = "black"
 atomic = true
-skip_glob = ["*/setup.py"]
+skip_glob = [
+    "*/setup.py",
+]
 filter_files = true
-known_first_party = ["{{ python_package_import_name }}"]
+known_first_party = [
+    "{{ python_package_import_name }}",
+]
 
+[tool.pdm]
+plugins = [
+    "pdm-bump",
+    "copier",
+]
+
+[tool.pdm.build]
+package-dir = "src"
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "ruff>=0.0.282",
+    "mypy>=1.4.1",
+    "pytest-cov>=4.1.0",
+    "black>=23.7.0",
+    "git-changelog>=2.3",
+    "parver>=0.3",
+]
+docs = [
+    "markdown-callouts>=0.3",
+    "markdown-exec>=1.7",
+    "mkdocs>=1.5",
+    "mkdocs-coverage>=1.0",
+    "mkdocs-gen-files>=0.5",
+    "mkdocs-git-committers-plugin-2>=1.2",
+    "mkdocs-git-revision-date-localized-plugin>=1.2",
+    "mkdocs-literate-nav>=0.6",
+    "mkdocs-material>=9.4",
+    "mkdocs-minify-plugin>=0.7",
+    "mkdocstrings[python]>=0.23",
+    "tomli>=2.0; python_version < '3.11'",
+]
 
 [tool.pdm.scripts]
 ruff = "ruff check src --fix-only"
