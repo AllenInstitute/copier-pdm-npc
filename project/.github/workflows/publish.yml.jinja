@@ -36,7 +36,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       env:
-        GITHUB_TOKEN: ${{ secrets.PAT }}
+        GITHUB_TOKEN: {% raw %}${{ secrets.PAT }}{% endraw %}
         # use PAT, or push comes from `github-actions` bot, which can't trigger
         # other workflows   
     
@@ -82,17 +82,17 @@ jobs:
       # actions/checkout 
       run: |
         pdm install -G dev
-        git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-        git config --global user.name "${{ github.actor }}"
+        git config --global user.email "{% raw %}${{ github.actor }}{% endraw %}@users.noreply.github.com"
+        git config --global user.name "{% raw %}${{ github.actor }}{% endraw %}"
         pdm publish
         git push
         git push --tags
       env:
-        GITHUB_TOKEN: ${{ secrets.PAT }}
+        GITHUB_TOKEN: {% raw %}${{ secrets.PAT }}{% endraw %}
         # use PAT, or push comes from `github-actions` bot, which can't trigger
         # other workflows   
 
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
       env:
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+        CODECOV_TOKEN: {% raw %}${{ secrets.CODECOV_TOKEN }}{% endraw %}
