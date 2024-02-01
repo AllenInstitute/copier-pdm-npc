@@ -31,6 +31,7 @@ jobs:
       fail-fast: true
       matrix:
         python-version: ["3.9", "3.11"]
+        os: [ubuntu-latest, macOS-latest, windows-latest]
     permissions: write-all
 
     steps:
