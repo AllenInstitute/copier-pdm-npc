@@ -1,15 +1,12 @@
 """
-    {{ project_name }}
-
     {{ project_description }}
-
-    author: {{ author_fullname }} <{{ author_email }}>
-    
-    license: {{ copyright_license }}
 """
 import doctest
 import importlib.metadata
 import logging
+
+# import functions from submodules here:
+# from {{ python_package_import_name }}.utils import *
 
 logger = logging.getLogger(__name__)
 
