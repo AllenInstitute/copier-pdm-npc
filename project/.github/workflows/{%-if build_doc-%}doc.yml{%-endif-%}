@@ -12,10 +12,10 @@ on:
     types: [published]
   workflow_dispatch:
 
-{% raw %}
+
 concurrency:
-  group: ${{ github.ref }}
-{% endraw %}
+  group: {% raw %}${{ github.ref }}{% endraw %}
+
 
 jobs:
   build-doc:
