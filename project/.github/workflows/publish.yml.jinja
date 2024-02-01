@@ -7,6 +7,7 @@ on:
   push:
     branches: [ "main" ] 
     paths: # pushing any files/folders marked ! will not trigger the workflow
+      - '**'
       - '!**.ipynb'
       - '!**.json'
       - '!.vscode'
@@ -23,20 +24,21 @@ concurrency: # jobs currently running will be cancelled when this workflow start
   cancel-in-progress: {% raw %}${{ github.ref != 'refs/heads/master' }}{% endraw %}
       
 jobs:
-  package:
+  test:
 
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
       matrix:
-        python-version: ["{{ python_package_requires_python }}"]
+        python-version: ["3.9", "3.11"]
     permissions: write-all
 
     steps:
     - uses: actions/checkout@v4
-      with:
-        fetch-depth: 0    # get all commits (on default branch)
-        fetch-tags: true  
+      env:
+        GITHUB_TOKEN: ${{ secrets.PAT }}
+        # use PAT, or push comes from `github-actions` bot, which can't trigger
+        # other workflows   
     
     - uses: pdm-project/setup-pdm@v4
       with:
@@ -58,45 +60,39 @@ jobs:
         CODE_OCEAN_DOMAIN: {% raw %}${{ secrets.CODE_OCEAN_DOMAIN }}{% endraw %}
       run: |
         mkdir .mypy_cache   
-        pdm run prebuild
-        
-    - name: Bump project version
-      run: |
-        pdm run bumpver
-                
-    - name: Publish
-      run: |
-        pdm publish
+        pdm run test
     
-    {% if add_requirements_txt %}
-    - name: Add requirements.txt
-      run: |
-        pdm export --without-hashes --prod -o requirements.txt
-    {% endif %}
+  publish:
+    needs: test
+    runs-on: ubuntu-latest
+    permissions: write-all
 
-    - name: Bump, pull, tag commit
-      # pull in case non-packaged files were changed since job started (packaged
-      # files would trigger a new job and cancel this one)
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0    # get all commits (on default branch)
+        fetch-tags: true  
+
+    - uses: pdm-project/setup-pdm@v4
+      with:
+        python-version: 3.11
+        cache: true # speeds-up setup by caching downloaded packages 
+
+    - name: Publish with bump & tag
+      # actions/checkout 
       run: |
-        git config --global user.email "{{ author_email }}"
-        git config --global user.name "{{ author_fullname }}"
-        git stash
-        git pull --rebase 
-        git stash pop
-        pdm run bumpver
-        git commit -am "Bump [skip actions]"
-        pdm run tag
+        pdm install -G dev
+        git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+        git config --global user.name "${{ github.actor }}"
+        pdm publish
+        git push
         git push --tags
       env:
-          GITHUB_TOKEN: {% raw %}${{ secrets.PAT }}{% endraw %}
-          # use PAT, or push comes from `github-actions` bot, which can't trigger
-          # other workflows   
-
-    - name: Publish
-      run: |
-        pdm publish
+        GITHUB_TOKEN: ${{ secrets.PAT }}
+        # use PAT, or push comes from `github-actions` bot, which can't trigger
+        # other workflows   
 
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
       env:
-        CODECOV_TOKEN: {% raw %}${{ secrets.CODECOV_TOKEN }}{% endraw %}
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
