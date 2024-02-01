@@ -30,7 +30,6 @@ Issues = "https://github.com/{{ repository_namespace }}/{{ repository_name }}/is
 # see src/scripts/README.md
 # executable_name = "{{ python_package_import_name }}.scripts.module_name:main"
 
-
 [tool.pdm.build]
 package-dir = "src"
 
@@ -48,7 +47,6 @@ dev = [
     "mypy>=1.4.1",
     "pytest-cov>=4.1.0",
     "black>=23.7.0",
-    ##
     "git-changelog>=2.3",
     "parver>=0.3",
 ]
@@ -73,48 +71,6 @@ plugins = [
     "copier",
 ]
 
-[tool.pdm.scripts]
-ruff = "ruff check src --fix-only"
-black = "black src"
-test = "pytest --cov --cov-report=xml"
-mypy = "mypy src --install-types --non-interactive"
-{% if build_doc %}doc = {shell = "cd docs && mkdocs serve", help = "Start the dev server for doc preview"}{% endif %}
-log = "git-changelog -o CHANGELOG.md"
-
-[tool.pdm.scripts.prebuild]
-composite = [
-    "mypy",
-    "test",
-    "black",
-    "ruff",
-    "log",
-]
-
-[tool.pdm.scripts.dryrun]
-composite = [
-    "prebuild",
-    "pdm publish --repository testpypi",
-]
-
-[tool.pdm.scripts.bumpver]
-composite = [
-    "pdm self add pdm-bump",
-    "pdm bump micro",
-]
-
-[tool.pdm.scripts.tag]
-composite = [
-    "pdm self add pdm-bump",
-    "pdm bump tag",
-]
-
-[tool.pdm.scripts.pub]
-composite = [
-    "prebuild",
-    "bumpver",
-    "pdm publish",
-]
-
 [tool.setuptools.packages.find]
 where = [
     "src",
@@ -132,14 +88,14 @@ target-version = ["py39", "py310", "py311"]
 [tool.ruff]
 line-length = 100
 select = [
-  "B",    # flake8-bugbear
-  "C4",   # flake8-comprehensions
-  "E",    # pycodestyle
-  "F",    # pyflakes
-  "PGH",  # pygrep-hooks
-  "RUF",  # ruff
-  "W",    # pycodestyle
-  "YTT",  # flake8-2020
+    "B",    # flake8-bugbear
+    "C4",   # flake8-comprehensions
+    "E",    # pycodestyle
+    "F",    # pyflakes
+    "PGH",  # pygrep-hooks
+    "RUF",  # ruff
+    "W",    # pycodestyle
+    "YTT",  # flake8-2020
     "ANN",
     "C",
     "I",
@@ -230,3 +186,49 @@ atomic = true
 skip_glob = ["*/setup.py"]
 filter_files = true
 known_first_party = ["{{ python_package_import_name }}"]
+
+
+[tool.pdm.scripts]
+ruff = "ruff check src --fix-only"
+black = "black src"
+pytest = "pytest --cov --cov-report=xml"
+mypy = "mypy src --install-types --non-interactive"
+log = "git-changelog -o CHANGELOG.md"
+dryrun = "pdm publish --repository testpypi --dry-run"
+post_init = "pdm install --plugins"
+
+[tool.pdm.scripts.bumpver]
+composite = [
+    "pdm self add pdm-bump",
+    "pdm bump micro",
+]
+
+[tool.pdm.scripts.tag]
+composite = [
+    "pdm self add pdm-bump",
+    "pdm bump tag",
+]
+
+[tool.pdm.scripts.docs]
+shell = "cd docs && mkdocs serve"
+help = "Start the dev server for doc preview"
+
+[tool.pdm.scripts.test]
+composite = [
+    "pdm run mypy",
+    "pdm run pytest",
+]
+
+[tool.pdm.scripts.pre_build]
+composite = [
+    "pdm run black",
+    "pdm run ruff",
+    "pdm run log",
+    "pdm run bumpver",
+]
+
+[tool.pdm.scripts.post_build]
+composite = [
+    "git commit -am 'Bump [skip actions]'",
+    "pdm run tag",
+]
