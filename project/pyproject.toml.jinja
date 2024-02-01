@@ -147,7 +147,7 @@ addopts = [
     "--doctest-modules",
     "--ignore-glob=*scripts*,*examples*,*docs*",
     "--cov",
-    "--cov-report=xml",
+    "--cov-report=html",
     "--cov-config=pyproject.toml",
     "--doctest-glob=*README.md",
     "-x",
@@ -190,7 +190,7 @@ known_first_party = ["{{ python_package_import_name }}"]
 [tool.pdm.scripts]
 ruff = "ruff check src --fix-only"
 black = "black src"
-pytest = "pytest --cov --cov-report=xml"
+pytest = "pytest --cov --cov-report=html"
 mypy = "mypy src --install-types --non-interactive"
 log = "git-changelog -o CHANGELOG.md"
 dryrun = "pdm publish --repository testpypi --dry-run"
