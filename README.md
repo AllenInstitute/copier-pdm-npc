@@ -39,7 +39,7 @@ will be created after the first successful run of `publish.yml` in Github Action
 To display the docs:
 - on the repo's Github page, go to `Settings > Pages`
 - choose `Source: Deploy from branch`
-- choose the `gh-pages` branch, then save
+- choose the `gh-pages` branch, the `/docs` folder, then save
 - after a few seconds, a link to the documentation site should be available at the
   top of the page
 - enable a link on the repository homepage by going editing the `About` settings
